@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Lk } from "react-flags-select";
+import { welcomeTranslations } from '../../assets/country';
 
 
 export default function Header() {
@@ -50,6 +52,12 @@ export default function Header() {
             </li>
           </Link>          
           )}
+
+          
+
+          <div className='hidden sm:inline text-white hover:underline'>
+            <p >{currentUser && welcomeTranslations[currentUser?.country]}</p>
+          </div>
 
           <Link to='/profile'>
             {currentUser ? (

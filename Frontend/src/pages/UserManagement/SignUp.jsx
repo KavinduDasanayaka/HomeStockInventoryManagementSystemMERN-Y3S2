@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import OAuth from '../../components/OAuth';
+import ReactFlagsSelect from "react-flags-select";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [selected, setSelected] = useState("");
+
   const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData({
@@ -15,6 +18,7 @@ export default function SignUp() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const updatedFormData = { ...formData, country: selected};
     try {
       setLoading(true);
       const res = await fetch('/api/auth/signup', {
@@ -22,7 +26,7 @@ export default function SignUp() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(updatedFormData),
       });
       const data = await res.json();
       console.log(data);
@@ -65,6 +69,12 @@ export default function SignUp() {
           id='phonenumber'
           onChange={handleChange}
         />
+        <ReactFlagsSelect
+          className="  border rounded w-full text-black bg-white flex flex-wrap mr-[7rem] "
+          selected={selected}
+          onSelect={(code) => setSelected(code)}
+          searchable = {true}
+        /> 
         <input
           type='password'
           placeholder='password'
