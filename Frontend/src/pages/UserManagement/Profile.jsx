@@ -26,8 +26,6 @@ export default function Profile() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
-  const [showListingsError, setShowListingsError] = useState(false);
-  const [userListings, setUserListings] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -105,6 +103,7 @@ export default function Profile() {
     }
   };
 
+  
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart());
@@ -200,9 +199,11 @@ export default function Profile() {
       >
         Delete account
       </button>
+      <Link to='/'>
         <button onClick={handleSignOut} className='bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95'>
           Sign out
         </button>
+      </Link>
       </div>
 
       <p className='text-red-700 mt-5'>{error ? error : ''}</p>

@@ -7,6 +7,9 @@ import SignUp from './pages/UserManagement/SignUp';
 import Profile from './pages/UserManagement/Profile';
 import PrivateRoute from './components/PrivateRoute';
 import Header from './components/Header';
+import ItemList from './pages/ItemBorrowingAndLendingManagement/ItemList';
+import CreateItemList from './pages/ItemBorrowingAndLendingManagement/CreateItemList';
+import UpdateItemList from './pages/ItemBorrowingAndLendingManagement/UpdateItemList';
 
 export default function App() {
   return (
@@ -22,6 +25,9 @@ export default function App() {
           <Route path='/profile' element={<Profile />} />
         </Route>
 
+        <Route path='/item-list' element={<ItemList />} />
+        <Route path='/create-item-list' element={<CreateItemList />} />
+        <Route path='/update-item-list/:id' element={<UpdateItemList />} />
       </Routes>
     </BrowserRouter>
   
