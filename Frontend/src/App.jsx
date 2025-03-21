@@ -11,6 +11,9 @@ import UploadReceipt from './pages/NoveltySection/UploadReceipt';
 import Timeline from './pages/NoveltySection/ShareRecipeSection/Timeline';
 import Post from './pages/NoveltySection/ShareRecipeSection/CreatePost';
 import SpecificPost from './pages/NoveltySection/ShareRecipeSection/SpecificPost';
+import ItemList from './pages/ItemBorrowingAndLendingManagement/ItemList';
+import CreateItemList from './pages/ItemBorrowingAndLendingManagement/CreateItemList';
+import UpdateItemList from './pages/ItemBorrowingAndLendingManagement/UpdateItemList';
 
 export default function App() {
   return (
@@ -30,6 +33,9 @@ export default function App() {
           <Route path="/post" element={<Post />} />
         </Route>
 
+        <Route path='/item-list' element={<ItemList />} />
+        <Route path='/create-item-list' element={<CreateItemList />} />
+        <Route path='/update-item-list/:id' element={<UpdateItemList />} />
       </Routes>
     </BrowserRouter>
   

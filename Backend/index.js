@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 
 import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.route.js';
+import itemRouter from './routes/itemborrowingandlending.route.js';
 import createPostRouter from './routes/post.route.js';
 
 import cookieParser from 'cookie-parser';
@@ -30,14 +31,14 @@ app.use(cookieParser());
 app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 
-
+app.use('/api/item', itemRouter);
 app.use('/api/create', createPostRouter);
 
-// app.use(express.static(path.join(__dirname, '/Frontend/dist')));
+app.use(express.static(path.join(__dirname, '/Frontend/dist')));
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'Frontend', 'dist', 'index.html'));
-// })
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Frontend', 'dist', 'index.html'));
+})
 
 //middleware
 app.use((err, req, res, next) => {
