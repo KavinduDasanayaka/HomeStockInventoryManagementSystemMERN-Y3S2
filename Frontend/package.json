@@ -11,12 +11,16 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.1",
+    "axios": "^1.8.4",
     "firebase": "^11.4.0",
+    "prop-types": "^15.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-flags-select": "^2.4.0",
+    "react-rating-stars-component": "^2.2.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.3.0",
+    "react-toastify": "^11.0.5",
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {
