@@ -8,7 +8,7 @@ const FooterLinks = [
   },
   {
     title: "About",
-    link: "/#about",
+    link: "/about",
   },
   {
     title: "Contact",
@@ -23,7 +23,7 @@ const FooterLinks = [
 const Footer = () => {
   return (
     <div className="bg-[#517891] text-white shadow-md">
-      <div className="bg-[#517891] min-h-[400px]">
+      <div className="bg-[#517891] min-h-[400px] flex justify-between items-center max-w-6xl mx-auto p-3">
         <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
           {/* company details */}
           <div className="py-8 px-4">
@@ -31,19 +31,13 @@ const Footer = () => {
               href="#"
               className="font-semibold tracking-widest text-2xl sm:text-3xl font-cursive"
             >
-              Pantry Bean
+              Home Stock
             </a>
             <p className="pt-4">
-              Crafted Coffee, Cozy Vibes, Unforgettable Moments – Your Perfect
-              Espresso Escape
+            Smart Storage, Seamless Shopping, Stress-Free Living –
+            Your Ultimate Home Inventory Companion.
             </p>
-            <a
-              href="https://www.youtube.com/channel/UC1H-a1MKEFXRiFlGNLcy7gQ"
-              target="_blank"
-              className="inline-block bg-[#3d2517] py-2 px-4 mt-5 text-sm rounded-full"
-            >
-              Visit our YouTube Channel
-            </a>
+            
           </div>
 
           {/* Footer links */}

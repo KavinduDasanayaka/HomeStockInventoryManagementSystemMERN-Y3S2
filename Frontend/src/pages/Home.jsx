@@ -1,5 +1,6 @@
 import Image1 from '../assets/Home_image_1.png';
 import Footer from '../components/Footer.jsx';
+import Services from '../components/Services.jsx';
 
 export default function Home() {
   return (
@@ -14,7 +15,7 @@ export default function Home() {
           <br />
           with ease
         </h1>
-        <p className='text-black text-xs sm:text-sm'>
+        <p className='text-black text-sm sm:text-sm'>
           Home Stock is the best place to easily manage your home inventory items in one place.
           <br />
           Save time, reduce waste, and never forget an item again!
@@ -27,6 +28,7 @@ export default function Home() {
       </div>
       
     </div>
+    <Services />
     <Footer />
     </div>
     
