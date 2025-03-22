@@ -15,6 +15,13 @@ export default {
           '60%': { transform: 'scale(1)' },
         },
       },
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: "1rem",
+          sm: "3rem",
+  },
+},
       animation: {
         beatingHeart: 'beatingHeart 1.2s infinite',
       },

@@ -28,18 +28,18 @@ export default function Header() {
               Home
             </Link>
           )}
-
+{/*
           {!currentUser && (
             <Link to="/about" className="hidden sm:inline text-white hover:underline">
               About
             </Link>
           )}
-
-          {/*<Link to={currentUser ? '/grocery-list' : '/about'}>
+*/}
+          <Link to={currentUser ? '/grocery-list' : '/about'}>
            <li className='hidden sm:inline text-white hover:underline'>
             {currentUser ? 'Grocery List' : 'About'}
           </li>
-          </Link>*/}
+          </Link>
           
 
           {/*user log welanm item list page ekt nettm sign in page ekt*/}
