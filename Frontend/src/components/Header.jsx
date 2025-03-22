@@ -18,10 +18,6 @@ export default function Header() {
           </h1>
         </Link>
 
-        <div className="hidden sm:inline hover:underline text-cyan-400">
-            <p>{currentUser && welcomeTranslations[currentUser?.country]}</p>
-          </div>
-
         <ul className="flex items-center gap-6">
           {!currentUser && (
             <Link to="/" className="hidden sm:inline text-white hover:underline">
@@ -57,7 +53,7 @@ export default function Header() {
 
           {/* Dropdown for Timeline & Post */}
           {currentUser && (
-            <div className="relative">
+            <div className="relative z-10">
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className="text-white hover:underline focus:outline-none"
@@ -94,7 +90,14 @@ export default function Header() {
               </button>
             )}
           </Link>
+
+          <div className="hidden sm:inline hover:underline text-cyan-400">
+            <p>{currentUser && welcomeTranslations[currentUser?.country]}</p>
+        </div>
+        
         </ul>
+
+
       </div>
     </header>
   );
