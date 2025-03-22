@@ -63,31 +63,31 @@ export default function GroceryList() {
         </Link>
       </div>
 
-      <table className="w-full border-2 border-[#8686ac]">
+      <table className="w-full border-2 border-[#77b1d4]">
         <thead>
-          <tr className="bg-[#272757] text-white text-left">
-            <th className="border border-[#272757] px-4 py-2">Name</th>
-            <th className="border border-[#272757] px-4 py-2">Brand</th>
-            <th className="border border-[#272757] px-4 py-2">Quantity</th>
-            <th className="border border-[#272757] px-4 py-2">Date</th>  
-            <th className="border border-[#272757] px-4 py-2">Edit</th>  
-            <th className="border border-[#272757] px-4 py-2">Delete</th>  
+          <tr className="bg-[#517891] text-white text-left">
+            <th className="border border-[#517891] px-4 py-2">Name</th>
+            <th className="border border-[#517891] px-4 py-2">Brand</th>
+            <th className="border border-[#517891] px-4 py-2">Quantity</th>
+            <th className="border border-[#517891] px-4 py-2">Date</th>  
+            <th className="border border-[#517891] px-4 py-2">Edit</th>  
+            <th className="border border-[#517891] px-4 py-2">Delete</th>  
           </tr>
         </thead>
 
         <tbody>
           {orderHistory?.map((elem, index) => (
-            <tr key={index} className='bg-[#505081] text-white'>
-              <td className='border-b-2 border-b-[#505081] px-4 py-2'>{elem.name}</td>
-              <td className='border-b-2 border-b-[#505081] px-4 py-2'>{elem.brand}</td>
-              <td className='border-b-2 border-b-[#505081] px-4 py-2'>{elem.quantity}</td>
-              <td className='border-b-2 border-b-[#505081] px-4 py-2'>{new Date(elem.date).toLocaleDateString()}</td>
-              <td className='border-b-2 border-b-[#505081] px-4 py-2 text-center'>
+            <tr key={index} className='bg-[#77b1d4] text-black'>
+              <td className='border-b-2 border-b-[#77b1d4] px-4 py-2'>{elem.name}</td>
+              <td className='border-b-2 border-b-[#77b1d4] px-4 py-2'>{elem.brand}</td>
+              <td className='border-b-2 border-b-[#77b1d4] px-4 py-2'>{elem.quantity}</td>
+              <td className='border-b-2 border-b-[#77b1d4] px-4 py-2'>{new Date(elem.date).toLocaleDateString()}</td>
+              <td className='border-b-2 border-b-[#77b1d4] px-4 py-2 text-center'>
                 <Link to={`/update-grocery-list/${elem._id}`}>
                   <button className="bg-green-700 flex text-white px-3 py-1 rounded-lg">Edit</button>
                 </Link>
               </td>
-              <td className='border-b-2 flex border-b-[#505081] px-4 py-2 text-center'>
+              <td className='border-b-2 flex border-b-[#77b1d4] px-4 py-2 text-center'>
                 <button 
                   onClick={() => handleDeleteConfirmation(elem._id)}
                   className="bg-red-700 text-white px-3 py-1 rounded-lg"
