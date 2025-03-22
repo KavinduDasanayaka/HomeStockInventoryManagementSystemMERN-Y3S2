@@ -14,6 +14,10 @@ import SpecificPost from './pages/NoveltySection/ShareRecipeSection/SpecificPost
 import ItemList from './pages/ItemBorrowingAndLendingManagement/ItemList';
 import CreateItemList from './pages/ItemBorrowingAndLendingManagement/CreateItemList';
 import UpdateItemList from './pages/ItemBorrowingAndLendingManagement/UpdateItemList';
+import GroceryList from './pages/GroceryListManagement/GroceryList';
+import CreateGroceryList from './pages/GroceryListManagement/CreateGroceryList';
+import UpdateGroceryList from './pages/GroceryListManagement/UpdateGroceryList';
+
 
 export default function App() {
   return (
@@ -36,6 +40,11 @@ export default function App() {
         <Route path='/item-list' element={<ItemList />} />
         <Route path='/create-item-list' element={<CreateItemList />} />
         <Route path='/update-item-list/:id' element={<UpdateItemList />} />
+
+        <Route path='/grocery-list' element={<GroceryList />} />
+        <Route path='/create-grocery-list' element={<CreateGroceryList />} />
+        <Route path='/update-grocery-list/:id' element={<UpdateGroceryList />} />
+
       </Routes>
     </BrowserRouter>
   
