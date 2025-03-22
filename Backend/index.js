@@ -7,7 +7,7 @@ import authRouter from './routes/auth.route.js';
 import itemRouter from './routes/itemborrowingandlending.route.js';
 import createPostRouter from './routes/post.route.js'
 import groceryRouter from './routes/grocerylist.route.js';
-
+import inventoryRouter from './routes/inventory.route.js'; // Added Inventory Routes
 
 import cookieParser from 'cookie-parser';
 import path from 'path';
@@ -36,6 +36,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/item', itemRouter);
 app.use('/api/grocery', groceryRouter);
 app.use('/api/create', createPostRouter);
+app.use('/api/inventory', inventoryRouter); // Added Inventory Management Route
 
 app.use(express.static(path.join(__dirname, '/Frontend/dist')));
 
