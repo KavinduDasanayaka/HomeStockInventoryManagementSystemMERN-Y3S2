@@ -13,7 +13,6 @@ const createPost = async (req, res) => {
       user: req.user._id, // Ensure the user is attached to the post
     });
 
-    console.log(req.user);
     const saved = await newPost.save();
     res.json(saved);
   } catch (error) {
@@ -39,7 +38,7 @@ const likepost = async (req, res) => {
   try {
     const {  _id } = req.user; // Assume frontend sends userId
     const post = await Post.findById(req.params.id);
-    console.log(post);
+
 
     if (!req.user) {
       return res.status(401).json({ message: "User not authenticated" });

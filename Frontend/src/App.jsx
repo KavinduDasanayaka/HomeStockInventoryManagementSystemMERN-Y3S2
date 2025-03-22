@@ -14,6 +14,7 @@ import SpecificPost from './pages/NoveltySection/ShareRecipeSection/SpecificPost
 import ItemList from './pages/ItemBorrowingAndLendingManagement/ItemList';
 import CreateItemList from './pages/ItemBorrowingAndLendingManagement/CreateItemList';
 import UpdateItemList from './pages/ItemBorrowingAndLendingManagement/UpdateItemList';
+import ItemPrivateRoute from './components/ItemPrivateRoute';
 import GroceryList from './pages/GroceryListManagement/GroceryList';
 import CreateGroceryList from './pages/GroceryListManagement/CreateGroceryList';
 import UpdateGroceryList from './pages/GroceryListManagement/UpdateGroceryList';
@@ -37,7 +38,11 @@ export default function App() {
           <Route path="/post" element={<Post />} />
         </Route>
 
-        <Route path='/item-list' element={<ItemList />} />
+        <Route element={<ItemPrivateRoute />}>
+          <Route path='/item-list' element={<ItemList/>} />
+        </Route>
+
+        
         <Route path='/create-item-list' element={<CreateItemList />} />
         <Route path='/update-item-list/:id' element={<UpdateItemList />} />
 
