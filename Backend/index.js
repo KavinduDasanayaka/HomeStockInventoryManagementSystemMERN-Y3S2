@@ -5,7 +5,9 @@ import dotenv from 'dotenv';
 import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.route.js';
 import itemRouter from './routes/itemborrowingandlending.route.js';
-import createPostRouter from './routes/post.route.js';
+import createPostRouter from './routes/post.route.js'
+import groceryRouter from './routes/grocerylist.route.js';
+
 
 import cookieParser from 'cookie-parser';
 import path from 'path';
@@ -32,6 +34,7 @@ app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 
 app.use('/api/item', itemRouter);
+app.use('/api/grocery', groceryRouter);
 app.use('/api/create', createPostRouter);
 
 app.use(express.static(path.join(__dirname, '/Frontend/dist')));

@@ -2,7 +2,7 @@ import bcryptjs from 'bcryptjs';
 import User from '../models/user.model.js';
 import ItemBorrowingAndLending from '../models/itemborrowingandlending.model.js';
 import { errorHandler } from '../utils/error.js';
-
+import GroceryListing from '../models/grocerylist.model.js';
 
 export const test = (req, res) => {
   res.json({
@@ -80,5 +80,19 @@ export const getUseritemBorrowingAndLendings = async (req, res, next) => {
     }
   } else {
     return next(errorHandler(401, 'You can only view your own items!'));
+  }
+};
+
+//for grocery list
+export const getUsergroceryListings = async (req, res, next) => {
+  if (req.user.id === req.params.id) {
+    try {
+      const GroceryListings = await GroceryListing.find({ userRef: req.params.id });
+      res.status(200).json(GroceryListings);
+    } catch (error) {
+      next(error);
+    }
+  } else {
+    return next(errorHandler(401, 'You can only view your own grocery!'));
   }
 };
