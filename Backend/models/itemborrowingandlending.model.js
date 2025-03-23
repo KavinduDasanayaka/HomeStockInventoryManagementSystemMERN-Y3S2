@@ -7,7 +7,7 @@ const itemBorrowingAndLendingSchema = new mongoose.Schema(
         required: true,
     },
     quantity: {
-        type: Number,
+        type: String,
         required: true,
     },
     place: {
@@ -17,6 +17,7 @@ const itemBorrowingAndLendingSchema = new mongoose.Schema(
     date: {
         type: Date,
         required: true,
+        default: Date.now
     },
     category: {
         type: String,
