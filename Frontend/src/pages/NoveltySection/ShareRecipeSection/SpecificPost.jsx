@@ -76,7 +76,7 @@ function SpecificPost() {
   };
 
   return (
-    <div className="container mx-auto my-10 p-8 bg-[#505081] text-white rounded-lg shadow-xl">
+    <div className="container mx-auto my-10 p-8 bg-[#517891] text-white rounded-lg shadow-xl">
       {loading ? (
         <p className="text-center text-xl font-semibold animate-pulse">
           Loading post details...
