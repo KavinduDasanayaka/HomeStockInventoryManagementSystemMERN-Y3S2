@@ -31,6 +31,14 @@ export default function Header() {
             </Link>
           )}
 */}
+
+          {currentUser && (
+          <Link to='/inventory'>
+            <li className='hidden sm:inline text-white hover:underline'>
+              Inventory
+            </li>
+          </Link>          
+          )}
           <Link to={currentUser ? '/grocery-list' : '/about'}>
            <li className='hidden sm:inline text-white hover:underline'>
             {currentUser ? 'Grocery List' : 'About'}

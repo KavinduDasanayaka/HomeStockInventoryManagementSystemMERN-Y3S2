@@ -19,6 +19,7 @@ import GroceryList from './pages/GroceryListManagement/GroceryList';
 import CreateGroceryList from './pages/GroceryListManagement/CreateGroceryList';
 import UpdateGroceryList from './pages/GroceryListManagement/UpdateGroceryList';
 import GroceryPrivateRoute from './components/GroceryPrivateRoute';
+import Inventory from './pages/InventoryManagement/Inventory';
 
 
 export default function App() {
@@ -53,8 +54,15 @@ export default function App() {
         
         <Route path='/create-grocery-list' element={<CreateGroceryList />} />
         <Route path='/update-grocery-list/:id' element={<UpdateGroceryList />} />
+        
+        <Route element={<Inventory />}>
+          <Route path='/Inventory' element={<Inventory />} />
+          {/* <Route path="/ipost" element={<iPost />} /> */}
+        </Route>
 
       </Routes>
+
+      
     </BrowserRouter>
   
 
