@@ -16,7 +16,7 @@ export default function UpdateItemList() {
         />
         
         <input
-          type="number"
+          type="text"
           name="quantity"
           placeholder="Quantity"
           required
