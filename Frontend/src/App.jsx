@@ -20,6 +20,7 @@ import CreateGroceryList from './pages/GroceryListManagement/CreateGroceryList';
 import UpdateGroceryList from './pages/GroceryListManagement/UpdateGroceryList';
 import GroceryPrivateRoute from './components/GroceryPrivateRoute';
 import Inventory from './pages/InventoryManagement/Inventory';
+import GenerateRecipe from './pages/NoveltySection/ShareRecipeSection/GenerateRecipe';
 
 
 export default function App() {
@@ -38,6 +39,7 @@ export default function App() {
           <Route path='/upload-receipt' element={<UploadReceipt />} />
           <Route path='/specific-Post/:id' element={<SpecificPost />} />
           <Route path="/post" element={<Post />} />
+          <Route path="/Generate" element={<GenerateRecipe />} />
         </Route>
 
         <Route element={<ItemPrivateRoute />}>
