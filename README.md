@@ -11,7 +11,7 @@ A full-stack MERN application built for **SLIIT ITPM (Y3S2)** to help households
 - Add, edit, and delete household items.
 - Automatically **update inventory** by uploading a **receipt image**.
 - Get **AI-powered recipe recommendations** based on current inventory.
-- View item usage logs and receive quantity alerts.
+- Manage borrowd and lent items
 
 ---
 
