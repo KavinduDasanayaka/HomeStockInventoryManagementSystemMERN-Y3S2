@@ -1,7 +1,7 @@
 # 🏠 HomeStock Inventory Management System
 
 A full-stack MERN application built for **SLIIT ITPM (Y3S2)** to help households manage inventory, track grocery usage, and get intelligent recommendations.
-
+<p><a  href="https://github.com/KavinduDasanayaka"><img  src="https://skillicons.dev/icons?i=mongo,express,react,nodejs,vite,redux,tailwind,vscode,github"  width=350></a></p>
 ---
 
 ## 📌 Project Overview
@@ -21,6 +21,18 @@ A full-stack MERN application built for **SLIIT ITPM (Y3S2)** to help households
 📷 Upload receipt image → extract items using OCR → update stock  
 🍽️ Get **AI recipe suggestions** using available ingredients  
 📊 Item usage analytics  
+
+
+
+---
+
+## 🚀 How to Run the Project
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/yourusername/HomeStockInventoryManagementSystemMERN-Y3S2.git
+cd HomeStockInventoryManagementSystemMERN-Y3S2
+
 🔔 Low-stock alerts  
 
 ---
