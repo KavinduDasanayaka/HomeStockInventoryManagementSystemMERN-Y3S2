@@ -32,10 +32,7 @@ A full-stack MERN application built for **SLIIT ITPM (Y3S2)** to help households
 ```bash
 git clone https://github.com/KavinduDasanayaka/HomeStockInventoryManagementSystemMERN-Y3S2.git
 cd HomeStockInventoryManagementSystemMERN-Y3S2
-
-
-![Screenshot 2025-04-29 144620](https://github.com/user-attachments/assets/b3774a1c-f336-4183-96ad-887a21f44de2)
-
+```
 
 ## 👥 Contributors
 
@@ -43,4 +40,9 @@ cd HomeStockInventoryManagementSystemMERN-Y3S2
 - [Nipun Madutha](https://github.com/Madutha123)
 - [Piumal Jayasekara](https://github.com/Piumal-jayasekara)
 - [dilakshi-thilini](https://github.com/dilakshi-thilini)
+
+  ##Home Page
+
+![Screenshot 2025-04-29 144620](https://github.com/user-attachments/assets/b3774a1c-f336-4183-96ad-887a21f44de2)
+
 
