@@ -1,13 +1,29 @@
 # 🏠 HomeStock Inventory Management System
 
-This is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) application built as the final project for the **ITPM (Information Technology Project Management)** module – Year 3 Semester 2.
+A full-stack MERN application built for **SLIIT ITPM (Y3S2)** to help households manage inventory, track grocery usage, and get intelligent recommendations.
+
+---
 
 ## 📌 Project Overview
 
-**HomeStock** is a household inventory management system that helps users track groceries, supplies, and other essential items in their home. Features include item tracking, quantity alerts, category management, and usage logs.
+**HomeStock** simplifies home inventory tracking by letting users:
+
+- Add, edit, and delete household items.
+- Automatically **update inventory** by uploading a **receipt image**.
+- Get **AI-powered recipe recommendations** based on current inventory.
+- View item usage logs and receive quantity alerts.
+
+---
+
+## 🧠 Key Features
+
+✅ Add/manage household inventory  
+📷 Upload receipt image → extract items using OCR → update stock  
+🍽️ Get **AI recipe suggestions** using available ingredients  
+📊 Item usage analytics  
+🔔 Low-stock alerts  
 
 ---
 
 ## 📁 Project Structure
-
 
