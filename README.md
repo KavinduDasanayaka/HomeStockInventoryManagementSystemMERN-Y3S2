@@ -34,4 +34,13 @@ git clone https://github.com/KavinduDasanayaka/HomeStockInventoryManagementSyste
 cd HomeStockInventoryManagementSystemMERN-Y3S2
 
 
+![Screenshot 2025-04-29 144620](https://github.com/user-attachments/assets/b3774a1c-f336-4183-96ad-887a21f44de2)
+
+
+## 👥 Contributors
+
+- [Kavindu Dasanayaka](https://github.com/KavinduDasanayaka)
+- [Nipun Madutha](https://github.com/Madutha123)
+- [Piumal Jayasekara](https://github.com/Piumal-jayasekara)
+- [dilakshi-thilini](https://github.com/dilakshi-thilini)
 
