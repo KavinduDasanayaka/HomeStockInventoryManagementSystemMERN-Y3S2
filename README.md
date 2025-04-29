@@ -30,7 +30,7 @@ A full-stack MERN application built for **SLIIT ITPM (Y3S2)** to help households
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/HomeStockInventoryManagementSystemMERN-Y3S2.git
+git clone https://github.com/KavinduDasanayaka/HomeStockInventoryManagementSystemMERN-Y3S2.git
 cd HomeStockInventoryManagementSystemMERN-Y3S2
 
 🔔 Low-stock alerts  
