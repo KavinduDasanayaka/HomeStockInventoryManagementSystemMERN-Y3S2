@@ -9,7 +9,7 @@ import createPostRouter from './routes/post.route.js'
 import groceryRouter from './routes/grocerylist.route.js';
 import inventoryRouter from './routes/inventory.route.js'; // Added Inventory Routes
 import aiRoutes from './routes/ai.route.js'; // Import AI Routes
-
+import previewInventoryRouter from './routes/previewinventory.route.js'; // Import Preview Inventory Route
 import cookieParser from 'cookie-parser';
 import path from 'path';
 
@@ -38,6 +38,9 @@ app.use('/api/item', itemRouter);
 app.use('/api/grocery', groceryRouter);
 app.use('/api/create', createPostRouter);
 app.use('/api/inventory', inventoryRouter); // Added Inventory Management Route
+
+
+app.use('/api/previewInventory', previewInventoryRouter); // Added Preview Inventory Route
 
 app.use("/api/ai", aiRoutes);
 

@@ -1,139 +1,123 @@
-
-
-
 import { useState } from "react";
-// import "prismjs/themes/prism-tomorrow.css";
-// import axios from "axios";
-// import ReactMarkdown from "react-markdown";
+import "prismjs/themes/prism-tomorrow.css";
+import { Upload, FileText } from "lucide-react";
 
 function UploadReceipt() {
-  const [code, setCode] = useState("Enter Your ingredients here");
-  const [review, setReview] = useState([]);
+  const [code, setCode] = useState("Enter your ingredients here...");
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
 
-  // async function reviewCode() {
-  //   setLoading(true);
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:3000/ai/get-review/",
-  //       { code }
-  //     );
-  //     console.log(response.data);
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-  //     const cleanedReview = response.data
-  //       .replace(/<think>.*?<\/think>/gs, "")
-  //       .trim();
+    const formData = new FormData();
+    formData.append("image", file);
+    setLoading(true);
 
-  //     setReview(cleanedReview);
-  //   } catch (error) {
-  //     console.error("Error fetching review:", error);
-  //     setReview([]);
-  //   }
-  //   setLoading(false);
-  // }
+    try {
+      const response = await fetch("api/previewInventory/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
 
-  // const handleImageUpload = async (e) => {
-  //   const file = e.target.files[0];
-  //   if (!file) return;
-  
-  //   const formData = new FormData();
-  //   formData.append("image", file);
-  
-  //   try {
-  //     const response = await fetch("http://localhost:3002/upload", {
-  //       method: "POST",
-  //       body: formData,
-  //     });
-  //     const data = await response.json();
-  //     console.log(data);
-  
-  //     let extractedData = data.extractedData;
-  
-  //     // Extract the JSON-like structure from the string
-  //     const jsonMatch = extractedData.match(/\[.*\]/s); // Matches anything inside [ ... ]
-  
-  //     console.log("Hii" + jsonMatch);
-  //     if (!jsonMatch) {
-  //       throw new Error("No valid JSON array found in extracted data.");
-  //     }
-  
-  //     const parsedData = JSON.parse(jsonMatch[0]); // Parse the matched JSON array
-  //     console.log(parsedData); // Check if parsed data looks correct
-  
-  //     // Set the parsed data to state
-  //     setData(parsedData);
-  //     setCode(JSON.stringify(parsedData, null, 2)); // Format for readability
-  //   } catch (error) {
-  //     console.error("Error uploading image:", error);
-  //     setCode("Error processing extracted data.");
-  //   }
-  // };
-  
+      const jsonMatch = data.extractedData.match(/\[.*\]/s);
+      if (!jsonMatch) throw new Error("No valid JSON array found.");
+
+      const parsedData = JSON.parse(jsonMatch[0]);
+      setData(parsedData);
+      setCode(JSON.stringify(parsedData, null, 2));
+    } catch (error) {
+      console.error("Error:", error);
+      setCode("Error processing data.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gray-900 text-white p-6 gap-6">
-      <header className="w-full text-center py-4 text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg rounded-lg">
-        AI Recipe Generator 👨‍🍳💻
+    <div className="min-h-screen bg-[#f0f4f9] text-gray-800 p-6 flex flex-col items-center gap-8">
+      <header className="text-center w-full max-w-4xl">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-xl shadow-lg">
+          🧾 Upload Receipt
+        </h1>
       </header>
 
-      <div className="flex flex-row gap-6 w-full max-w-6xl">
+      <div className="flex flex-wrap gap-8 justify-center w-full max-w-6xl">
         {/* Left Panel */}
-        <div className="w-1/2 bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 overflow-auto">
+        <div className="w-full md:w-[45%] bg-white p-6 rounded-xl shadow-lg border border-gray-200 space-y-4">
+          <label
+            htmlFor="fileUpload"
+            className="cursor-pointer flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg shadow-md hover:opacity-90 transition"
+          >
+            <Upload className="w-5 h-5" /> Choose Image
+          </label>
           <input
             type="file"
+            id="fileUpload"
             accept=".jpg,.jpeg,.png"
-/*             onChange={handleImageUpload} */
-            className="mb-4 text-sm text-gray-400 cursor-pointer bg-gray-700 p-2 rounded-lg"
+            onChange={handleImageUpload}
+            className="hidden"
           />
 
-          {/* Code Editor */}
-          <div className="border border-gray-600 rounded-lg p-4 bg-gray-900">
-{/*             <p>{code}</p> */}
+          <div>
+            <h2 className="text-md font-semibold text-gray-600 mb-1 flex items-center gap-2">
+              <FileText className="w-4 h-4" /> Extracted Data
+            </h2>
+            <textarea
+              readOnly
+              className="w-full h-64 p-3 bg-gray-900 text-green-400 font-mono rounded-md border border-gray-700 resize-none"
+              value={code}
+            />
           </div>
 
           <button
-/*             onClick={reviewCode} */
-            className="w-full mt-4 py-3 text-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-purple-500 hover:to-blue-600 rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl"
+            disabled={loading || !data}
+            className={`w-full py-3 text-white font-semibold rounded-lg transition duration-300 ${
+              loading || !data
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-purple-500 hover:to-blue-600 shadow-lg hover:scale-105"
+            }`}
           >
-            Update Inventory
+            {loading ? "Processing..." : "Update Inventory"}
           </button>
         </div>
 
-        {/* Right Panel */}
-
-      </div>
-
-      {/* Table */}
-      <div className="w-full max-w-4xl">
-        <table className="w-full border-collapse border border-gray-700 mt-6">
-          <thead>
-            <tr className="bg-gray-800 text-white">
-              <th className="border border-gray-700 p-2">Quantity</th>
-              <th className="border border-gray-700 p-2">Item</th>
-              <th className="border border-gray-700 p-2">Unit Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.isArray(data) && data.length > 0 ? (
-              data.map((item, index) => (
-                <tr key={index} className="bg-gray-700 text-white">
-                  <td className="border border-gray-700 p-2">
-                    {item.quantity}
-                  </td>
-                  <td className="border border-gray-700 p-2">{item.item}</td>
-                  <td className="border border-gray-700 p-2">{item.unitPrice}</td>
+        {/* Right Panel - Data Table */}
+        <div className="w-full md:w-[50%] bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+          <h2 className="text-lg font-semibold mb-4 text-gray-700">
+            📋 Parsed Receipt Items
+          </h2>
+          <div className="overflow-x-auto">
+            <table className="w-full border border-gray-300 text-sm">
+              <thead className="bg-gray-100 text-gray-800">
+                <tr>
+                  <th className="p-2 border">Quantity</th>
+                  <th className="p-2 border">Item</th>
+                  <th className="p-2 border">Unit Price</th>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="3" className="text-center p-2">
-                  No data available
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+                {Array.isArray(data) && data.length > 0 ? (
+                  data.map((item, index) => (
+                    <tr key={index} className="text-center text-gray-700 even:bg-gray-50">
+                      <td className="p-2 border">{item.quantity}</td>
+                      <td className="p-2 border">{item.item}</td>
+                      <td className="p-2 border">{item.unitPrice}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="3" className="text-center p-3 text-gray-500">
+                      No data available
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   );

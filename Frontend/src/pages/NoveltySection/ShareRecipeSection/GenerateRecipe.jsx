@@ -279,7 +279,7 @@ export default function GenerateRecipe() {
         )}
       </div>
 
-      {recipe && recipe.trim() ? (
+      {recipe ? (
         <div className="flex justify-center items-center mt-6">
           <div
             id="recipe-container" // Add an ID for PNG generation
@@ -292,7 +292,7 @@ export default function GenerateRecipe() {
         <p className="text-center text-gray-500 mt-4">No recipe available.</p>
       )}
 
-      {recipe && recipe.trim() && (
+      {recipe && (
         <div className="flex justify-center mt-4 space-x-4">
           <button
             onClick={downloadPNG}
