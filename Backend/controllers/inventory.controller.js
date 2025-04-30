@@ -13,30 +13,14 @@ export const getInventory = async (req, res) => {
 // Add a new inventory item
 export const addInventory = async (req, res) => {
   try {
-    const { name, quantity } = req.body;
-    const newItem = new Inventory({ name, quantity });
+    const { name, quantity, expireDate } = req.body;
+    const newItem = new Inventory({ name, quantity, expireDate });
     await newItem.save();
     res.json(newItem);
   } catch (error) {
     res.status(500).json({ message: "Error adding item" });
   }
 };
-
-// // Update an inventory item
-// export const updateInventory = async (req, res) => {
-//   try {
-//     const { name, quantity } = req.body;
-//     const updatedItem = await Inventory.findByIdAndUpdate(
-//       req.params.id,
-//       { name, quantity },
-//       { new: true }
-//     );
-//     res.json(updatedItem);
-//   } catch (error) {
-//     res.status(500).json({ message: "Error updating item" });
-//   }
-// };
-
 
 // Delete an inventory item
 export const deleteInventory = async (req, res) => {
@@ -51,10 +35,10 @@ export const deleteInventory = async (req, res) => {
 // Update an inventory item (POST request)
 export const updateInventory = async (req, res) => {
   try {
-    const { name, quantity } = req.body;
+    const { name, quantity, expireDate } = req.body;
     const updatedItem = await Inventory.findByIdAndUpdate(
       req.params.id,
-      { name, quantity },
+      { name, quantity, expireDate },
       { new: true }
     );
 

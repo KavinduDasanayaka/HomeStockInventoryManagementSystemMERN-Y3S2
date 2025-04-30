@@ -76,6 +76,9 @@ export default function Header() {
                   <Link to="/post" className="block px-4 py-2 text-black hover:bg-[#77b1d4]">
                     Create Post
                   </Link>
+                  <Link to="/Generate" className="block px-4 py-2 text-black hover:bg-[#77b1d4]">
+                    Generate Recipe
+                  </Link>
                 </div>
               )}
             </div>

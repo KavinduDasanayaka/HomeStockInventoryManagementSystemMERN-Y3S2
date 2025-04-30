@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 
 export default function Inventory() {
   const [items, setItems] = useState([]);
-  const [newItem, setNewItem] = useState({ name: '', quantity: '' });
+  const [newItem, setNewItem] = useState({ name: '', quantity: '', expireDate: '' });
   const [editItem, setEditItem] = useState(null);
 
   useEffect(() => {
@@ -22,14 +22,14 @@ export default function Inventory() {
   };
 
   const handleAddItem = async () => {
-    if (!newItem.name || !newItem.quantity) {
+    if (!newItem.name || !newItem.quantity || !newItem.expireDate) {
       toast.warning('Please fill all fields.');
       return;
     }
     try {
       const response = await axios.post('http://localhost:5173/api/inventory', newItem);
       setItems([...items, response.data]);
-      setNewItem({ name: '', quantity: '' });
+      setNewItem({ name: '', quantity: '', expireDate: '' });
       toast.success('Item added successfully!');
     } catch (error) {
       toast.error('Error adding item.');
@@ -51,14 +51,14 @@ export default function Inventory() {
   };
 
   const handleUpdateItem = async () => {
-    if (!editItem.name || !editItem.quantity) {
+    if (!editItem.name || !editItem.quantity || !editItem.expireDate) {
       toast.warning('Please fill all fields.');
       return;
     }
     try {
       const response = await axios.post(
         `http://localhost:5173/api/inventory/update/${editItem._id}`, 
-        { name: editItem.name, quantity: Number(editItem.quantity) }
+        { name: editItem.name, quantity: Number(editItem.quantity), expireDate: editItem.expireDate }
       );
       setItems(items.map(item => (item._id === editItem._id ? response.data : item)));
       setEditItem(null);
@@ -89,6 +89,12 @@ export default function Inventory() {
           value={newItem.quantity}
           onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })}
         />
+        <input
+          type='date'
+          className='border rounded p-2 w-36'
+          value={newItem.expireDate}
+          onChange={(e) => setNewItem({ ...newItem, expireDate: e.target.value })}
+        />
         <button
           className='bg-green-500 text-white px-4 py-2 rounded'
           onClick={handleAddItem}
@@ -115,13 +121,20 @@ export default function Inventory() {
                   value={editItem.quantity}
                   onChange={(e) => setEditItem({ ...editItem, quantity: e.target.value })}
                 />
+                <input
+                  type='date'
+                  className='border rounded p-1 w-36'
+                  value={editItem.expireDate}
+                  onChange={(e) => setEditItem({ ...editItem, expireDate: e.target.value })}
+                />
                 <button className='bg-blue-500 text-white px-3 py-1 rounded' onClick={handleUpdateItem}>
                   Save
                 </button>
               </div>
             ) : (
               <>
-                <span>{item.name} - {item.quantity}</span>
+                <span><strong>Item Name: </strong>{item.name}   |   <strong>Quantity: </strong>{item.quantity}   |   <strong>Expires: </strong>{new Date(item.expireDate).toISOString().split('T')[0]}</span>
+                {/* <span>Item Name: {item.name}   |   Quantity: {item.quantity}   |   Expires: {item.expireDate}</span> */}
                 <div className='flex gap-2'>
                   <button
                     className='bg-yellow-500 text-white px-2 py-1 rounded'

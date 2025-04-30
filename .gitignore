@@ -7,12 +7,15 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+uploads
+sonar-scanner-cli-7.1.0.4889-windows-x64/*
 node_modules
 dist
 dist-ssr
 *.local
 
 # Editor directories and files
+
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -23,3 +26,9 @@ dist-ssr
 *.sln
 *.sw?
 .env
+.properties
+.txt
+You're very welcome! I'm glad we co.txt
+.scannerwork/.sonar_lock
+sonar-project.properties
+.scannerwork/report-task.txt

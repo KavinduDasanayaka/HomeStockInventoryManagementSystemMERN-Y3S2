@@ -61,3 +61,32 @@ export const creategroceryListing = async (req, res, next) => {
       next(error);
     }
   };
+  
+  export const getExpiringListingsFiveDays = async (req, res, next) => {
+    try {
+      const now = new Date();
+      const fiveDaysFromNow = new Date();
+      fiveDaysFromNow.setDate(now.getDate() + 5);
+  
+      const userId = req.user.id;
+  
+      const expiringListings = await GroceryListing.find({
+        userRef: userId,
+        date: {
+          $gte: now,
+          $lte: fiveDaysFromNow,
+        },
+      });
+  
+      if (expiringListings.length === 0) {
+        return next(errorHandler(404, 'No groceries expiring in the next 5 days.'));
+      }
+  
+      res.status(200).json(expiringListings);
+    } catch (error) {
+      next(error);
+    }
+  };
+  
+  
+  
