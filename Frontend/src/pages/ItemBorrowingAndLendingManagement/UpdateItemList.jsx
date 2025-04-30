@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function UpdateItemList() {
   const { id } = useParams(); // Get item ID from the URL
@@ -28,7 +30,8 @@ export default function UpdateItemList() {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.message || 'Error fetching grocery details');
+        setError(data.message || 'Error fetching item details');
+        toast.error(data.message || 'Error fetching item details');
         return;
       }
 
@@ -44,6 +47,7 @@ export default function UpdateItemList() {
       setLoading(false);
     } catch (err) {
       setError('Something went wrong while fetching the data');
+      toast.error('Something went wrong while fetching the data');
     }
   };
 
@@ -64,20 +68,29 @@ export default function UpdateItemList() {
 
       const data = await res.json();
       if (!res.ok) {
-        setError(data.message || 'Failed to update grocery');
+        setError(data.message || 'Failed to update item');
+        toast.error(data.message || 'Failed to update item');
         return;
       }
 
-      navigate('/item-list'); // Redirect to item list page
+      // Show success toast message
+      toast.success('Item updated successfully! 🎉');
+
+      // Redirect after delay to allow users to see the message
+      setTimeout(() => {
+        navigate('/item-list');
+      }, 1000);
     } catch (err) {
       setError('Something went wrong. Please try again.');
+      toast.error('Something went wrong. Please try again.');
     }
-  }; // Added missing closing bracket here
+  };
 
   return (
     <div className="p-3 max-w-lg mx-auto">
+      <ToastContainer />
       <h1 className="text-3xl font-semibold text-center my-7 text-[#0F0E47]">
-        Update Borrowed or lent Item
+        Update Borrowed or Lent Item
       </h1>
 
       {loading ? (
@@ -125,7 +138,7 @@ export default function UpdateItemList() {
             className="border p-3 rounded-lg"
           />
 
-          <div className="">
+          <div>
             <label className="block text-gray-700 font-medium mb-2">
               Category
             </label>
@@ -161,7 +174,7 @@ export default function UpdateItemList() {
               
           <button
             type="submit"
-            className=" bg-green-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80"
+            className="bg-green-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80"
           >
             Update Item 
           </button>
