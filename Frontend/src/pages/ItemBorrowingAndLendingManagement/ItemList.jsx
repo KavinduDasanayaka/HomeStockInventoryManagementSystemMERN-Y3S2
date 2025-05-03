@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {FaSearch} from 'react-icons/fa';
+import { FaSearch } from 'react-icons/fa';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function GroceryList() {
   const { currentUser } = useSelector((state) => state.user);
@@ -18,6 +20,9 @@ export default function GroceryList() {
   // Report modal state
   const [showReport, setShowReport] = useState(false);
 
+  // Reminder threshold in days
+  const reminderThreshold = 3; // Notify when date is within 3 days
+
   useEffect(() => {
     fetchData();
   }, [currentUser]);
@@ -26,6 +31,17 @@ export default function GroceryList() {
     // Filter items whenever search criteria or itemHistory changes
     filterItems();
   }, [searchTerm, itemHistory]);
+
+  useEffect(() => {
+    // Check for upcoming reminders on initial load and then every hour
+    checkReminders();
+    
+    const interval = setInterval(() => {
+      checkReminders();
+    }, 3600000); // Check every hour
+    
+    return () => clearInterval(interval);
+  }, [itemHistory]);
 
   const fetchData = async () => {
     try {
@@ -42,6 +58,50 @@ export default function GroceryList() {
     } catch (error) {
       setShowListingsError(true);
     }
+  };
+
+  const checkReminders = () => {
+    const today = new Date();
+    
+    itemHistory.forEach(item => {
+      const reminderDate = new Date(item.date);
+      const timeDiff = reminderDate.getTime() - today.getTime();
+      const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      
+      if (daysDiff <= reminderThreshold && daysDiff >= 0) {
+        // Reminder is within the threshold and in the future
+        showReminderToast(item, daysDiff);
+      } else if (daysDiff < 0 && daysDiff > -1) {
+        // Reminder date is today (overdue but less than 1 day)
+        showOverdueToast(item);
+      }
+    });
+  };
+
+  const showReminderToast = (item, daysRemaining) => {
+    const message = daysRemaining === 0 
+      ? `Reminder: "${item.name}" is due today!` 
+      : `Reminder: "${item.name}" is due in ${daysRemaining} day${daysRemaining > 1 ? 's' : ''}`;
+    
+    toast.info(message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  };
+
+  const showOverdueToast = (item) => {
+    toast.error(`Overdue: "${item.name}" reminder has passed!`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
 
   const filterItems = () => {
@@ -80,13 +140,21 @@ export default function GroceryList() {
 
       setItemHistory((prev) => prev.filter((grocery) => grocery._id !== deleteId));
       setDeleteId(null);
+      toast.success('Item deleted successfully!');
     } catch (error) {
       console.log(error.message);
+      toast.error('Failed to delete item');
     }
   };
 
   const toggleReport = () => {
     setShowReport(!showReport);
+  };
+
+  // Function to manually check for reminders
+  const checkRemindersManually = () => {
+    checkReminders();
+    toast.info('Checked for upcoming reminders!');
   };
 
   // Function to generate a report summary
@@ -144,6 +212,7 @@ export default function GroceryList() {
     // Trigger download and remove link
     link.click();
     document.body.removeChild(link);
+    toast.success('CSV exported successfully!');
   };
 
   // Function to export items as PDF
@@ -212,29 +281,45 @@ export default function GroceryList() {
     
     // Save the PDF
     doc.save("item_borrowing_and_lending_report.pdf");
+    toast.success('PDF exported successfully!');
   };
 
   // Calculate report data if report is showing
   const reportData = showReport ? generateReportSummary() : null;
 
+  // Function to highlight upcoming reminder dates
+  const getDateCellStyle = (dateStr) => {
+    const reminderDate = new Date(dateStr);
+    const today = new Date();
+    const timeDiff = reminderDate.getTime() - today.getTime();
+    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    
+    if (daysDiff < 0) {
+      return "bg-red-200 font-bold"; // Overdue
+    } else if (daysDiff <= reminderThreshold) {
+      return "bg-yellow-200 font-bold"; // Approaching
+    }
+    return "";
+  };
+
   return (
     <div className='px-10'>
+      <ToastContainer />
       <h1 className='text-3xl text-center font-semibold my-7 text-[#0F0E47]'>Borrowed And Lent Items List</h1>
       
       {/* Search and Action Buttons */}
       <div className="mb-7">
-      <div className="relative w-full ">
-      <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-      <input
-        type="text"
-        placeholder="Search by name or place..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="w-full p-2 pl-10 border border-[#517891] rounded focus:outline-none"
-      />
-    </div>
-          
-    
+        <div className="relative w-full">
+          <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search by name or place..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full p-2 pl-10 border border-[#517891] rounded focus:outline-none"
+          />
+        </div>
+        
         <div className="flex justify-between mt-4">
           <div>
             <button 
@@ -251,15 +336,28 @@ export default function GroceryList() {
             </button>
             <button 
               onClick={exportToPDF} 
-              className="bg-green-700 text-white px-4 py-2 rounded-lg"
+              className="bg-green-700 text-white px-4 py-2 rounded-lg mr-2"
             >
               Export PDF
+            </button>
+            <button 
+              onClick={checkRemindersManually} 
+              className="bg-orange-500 text-white px-4 py-2 rounded-lg"
+            >
+              Check Reminders
             </button>
           </div>
           <Link to="/create-item-list">
             <button className="bg-green-700 text-white px-4 py-2 rounded-lg">Add Items</button>
           </Link>
         </div>
+      </div>
+      
+      {/* Reminder Legend */}
+      <div className="flex items-center mb-4 text-sm">
+        <span>Reminder status: </span>
+        <span className="mx-2 px-2 py-1 bg-yellow-200 rounded">Approaching</span>
+        <span className="mx-2 px-2 py-1 bg-red-200 rounded">Overdue</span>
       </div>
       
       {/* Report Section */}
@@ -321,7 +419,7 @@ export default function GroceryList() {
                 <td className='border-b-2 border-b-[#77b1d4] px-4 py-2'>{elem.quantity}</td>
                 <td className='border-b-2 border-b-[#77b1d4] px-4 py-2'>{elem.place}</td>
                 <td className='border-b-2 border-b-[#77b1d4] px-4 py-2'>{elem.category}</td>
-                <td className='border-b-2 border-b-[#77b1d4] px-4 py-2'>
+                <td className={`border-b-2 border-b-[#77b1d4] px-4 py-2 ${getDateCellStyle(elem.date)}`}>
                   {new Date(elem.date).toLocaleDateString()}
                 </td>
                 <td className='border-b-2 border-b-[#77b1d4] px-4 py-2 text-center'>
