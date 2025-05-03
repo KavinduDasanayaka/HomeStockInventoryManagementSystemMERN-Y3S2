@@ -1,8 +1,9 @@
 import Groq from 'groq-sdk'
 import 'dotenv/config';
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+// import fs from "fs";
+// import path from "path";
+// import { fileURLToPath } from "url";
+// import PreviewInventory from '../models/previewinventory';
 
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 if (!GROQ_API_KEY) {
@@ -42,53 +43,55 @@ async function getResponseRecipe(prompt) {
 }
 
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// In On PreviewInventory controller 
 
-export const handleUpload = async (req, res) => {
-  if (!req.file) return res.status(400).json({ error: "No file uploaded" });
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
-  const imagePath = path.join(__dirname, "..", req.file.path);
+// export const handleUpload = async (req, res) => {
+//   if (!req.file) return res.status(400).json({ error: "No file uploaded" });
 
-  try {
-    const base64Image = fs.readFileSync(imagePath, { encoding: "base64" });
+//   const imagePath = path.join(__dirname, "..", req.file.path);
 
-    const chatCompletion = await groq.chat.completions.create({
-      model: "whisper-large-v3",
-      messages: [
-        {
-          role: "user",
-          content: [
-            {
-              type: "text",
-              text: `Extract purchased items, quantities, and unit prices from the receipt image. Return ONLY a **valid JSON array** with this format:
-        [
-          {"quantity": <integer>, "item": "<exact_item_name>", "unitPrice": "<currency_symbol><amount>.00"}
-        ]
-        ⚠️ STRICT RULES:
-        - NO extra text, explanations, markdown, or wrapping inside another object.
-        - DO NOT return "extractedData": or any keys—just the raw JSON array.
-        - If the data is unreadable, return [] EXACTLY.
-        - If you fail these rules, your answer is **incorrect**.`
-            },
-            {
-              type: "image_url",
-              image_url: { url: `data:image/jpeg;base64,${base64Image}` }
-            }
-          ]
-        }
-      ]
-    });
+//   try {
+//     const base64Image = fs.readFileSync(imagePath, { encoding: "base64" });
 
-    const extractedData = chatCompletion.choices[0].message.content;
-    res.json({ extractedData });
+//     const chatCompletion = await groq.chat.completions.create({
+//       model: "",
+//       messages: [
+//         {
+//           role: "user",
+//           content: [
+//             {
+//               type: "text",
+//               text: `Extract purchased items, quantities, and unit prices from the receipt image. Return ONLY a **valid JSON array** with this format:
+//         [
+//           {"quantity": <integer>, "item": "<exact_item_name>", "unitPrice": "<currency_symbol><amount>.00"}
+//         ]
+//         ⚠️ STRICT RULES:
+//         - NO extra text, explanations, markdown, or wrapping inside another object.
+//         - DO NOT return "extractedData": or any keys—just the raw JSON array.
+//         - If the data is unreadable, return [] EXACTLY.
+//         - If you fail these rules, your answer is **incorrect**.`
+//             },
+//             {
+//               type: "image_url",
+//               image_url: { url: `data:image/jpeg;base64,${base64Image}` }
+//             }
+//           ]
+//         }
+//       ]
+//     });
 
-    fs.unlinkSync(imagePath); // Clean up
-  } catch (error) {
-    console.error("Error processing:", error);
-    res.status(500).json({ error: "Processing Failed" });
-  }
-};
+//     const extractedData = chatCompletion.choices[0].message.content;
+//     res.json({ extractedData });
+
+//     fs.unlinkSync(imagePath); // Clean up
+//   } catch (error) {
+//     console.error("Error processing:", error);
+//     res.status(500).json({ error: "Processing Failed" });
+//   }
+// };
 
 
-export  {getResponseRecipe ,};
+export  {getResponseRecipe};

@@ -6,34 +6,64 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Controller to create a new preview inventory listing
 const createPreviewInventoryListing = async (req, res) => {
-    try {
-        const { name, quantity, unitPrice, userRef } = req.body;
+  try {
+    const items = req.body.data;
+    const user = req.body.user;
 
-        // Validate required fields
-        if (!name || !quantity || !unitPrice || !userRef) {
-            return res.status(400).json({ message: 'Name, quantity, unit price, and user reference are required.' });
-        }
-
-        // Create a new preview inventory item
-        const newInventoryItem = new PreviewInventory({
-            name,
-            quantity,
-            unitPrice,
-            userRef
-        });
-
-        // Save the item to the database
-        const savedItem = await newInventoryItem.save();
-
-        res.status(201).json({ message: 'Preview inventory item created successfully.', data: savedItem });
-    } catch (error) {
-        console.error('Error creating preview inventory item:', error);
-        res.status(500).json({ message: 'Internal server error.' });
+    if (!user?.id) {
+      return res.status(401).json({ message: "User not authenticated" });
     }
+
+    const savedItems = [];
+
+    for (const e of items) {
+      const { item, quantity, unitPrice } = e;
+      const userId = user.id;
+
+      if (!item || !quantity || !unitPrice || !userId) {
+        return res.status(400).json({
+          message: 'Name, quantity, unit price, and user reference are required.'
+        });
+      }
+
+      const newInventoryItem = new PreviewInventory({
+        item,
+        quantity,
+        unitPrice,
+        userRef: userId
+      });
+
+      const savedItem = await newInventoryItem.save();
+      savedItems.push(savedItem);
+    }
+
+    return res.status(201).json({
+      message: 'Preview inventory items created successfully.',
+      data: savedItems
+    });
+
+  } catch (error) {
+    console.error('Error creating preview inventory items:', error);
+    return res.status(500).json({ message: 'Internal server error.' });
+  }
 };
 
+const getAllPreviewInvetoryItems = async (req, res, next) =>{
+
+    try {
+      // Populate 
+
+      const previewItems = await PreviewInventory.find({ userRef: req.params.id })
+      ;
+  
+      // Respond with the items
+      res.json(previewItems);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+
+}
 
 const GEMINI_API_KEY = process.env.Gemani_AI; // spelling 'Gemani' should match your .env key
 if (!GEMINI_API_KEY) {
@@ -94,4 +124,4 @@ const handleUpload = async (req, res) => {
   }
 };
 
-export {createPreviewInventoryListing ,handleUpload} ;
+export {createPreviewInventoryListing ,handleUpload,getAllPreviewInvetoryItems} ;
