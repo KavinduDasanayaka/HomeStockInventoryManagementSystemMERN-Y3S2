@@ -1,12 +1,14 @@
 import { useState } from "react";
 import "prismjs/themes/prism-tomorrow.css";
 import { Upload, FileText } from "lucide-react";
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 function UploadReceipt() {
   const [code, setCode] = useState("Enter your ingredients here...");
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -36,13 +38,49 @@ function UploadReceipt() {
     }
   };
 
+  // const UpdatePreviewInventorye = async () => {
+  //   setLoading(true);
+  //   const formData = await fetch("api/previewInventory/create", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   })};
+
+    const result = async () => {
+      try {
+        const response = await axios.post("api/previewInventory/create", { data });
+        console.log(response.data); // .data holds the actual response content
+        setTimeout(navigate('/grocery-list'),5000)
+      } catch (error) {
+        console.error("Error creating preview inventory:", error);
+      }
+    };
+    
+
+    // const[name,setName] = useState("");
+ 
+    // const Change = (e) => {
+    //       const input = e.target.value
+    //       console.log(input)
+    //       setName(input)
+    // }
+
+    // const upload = async function() {
+    //   const Name = axios.post("api/api/previewInventory/create",{name}).then((res) => {
+    //     console.log(res)
+    //   })
+    // }
+
   return (
-    <div className="min-h-screen bg-[#f0f4f9] text-gray-800 p-6 flex flex-col items-center gap-8">
+    <div className="min-h-screen from-[#77b1d4] to-[#a1c6e8] text-gray-800 p-6 flex flex-col items-center gap-8">
       <header className="text-center w-full max-w-4xl">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-xl shadow-lg">
           🧾 Upload Receipt
-        </h1>
+        </h1> 
       </header>
+
+      
 
       <div className="flex flex-wrap gap-8 justify-center w-full max-w-6xl">
         {/* Left Panel */}
@@ -53,6 +91,8 @@ function UploadReceipt() {
           >
             <Upload className="w-5 h-5" /> Choose Image
           </label>
+
+
           <input
             type="file"
             id="fileUpload"
@@ -61,16 +101,9 @@ function UploadReceipt() {
             className="hidden"
           />
 
-          <div>
-            <h2 className="text-md font-semibold text-gray-600 mb-1 flex items-center gap-2">
-              <FileText className="w-4 h-4" /> Extracted Data
-            </h2>
-            <textarea
-              readOnly
-              className="w-full h-64 p-3 bg-gray-900 text-green-400 font-mono rounded-md border border-gray-700 resize-none"
-              value={code}
-            />
-          </div>
+          {/* <label>EnterName:</label>
+          <input name = "name" type = "text" onChange = {Change} value = {name}/>
+          <button onClick = {upload}> hi  </button> */}
 
           <button
             disabled={loading || !data}
@@ -79,6 +112,7 @@ function UploadReceipt() {
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-purple-500 hover:to-blue-600 shadow-lg hover:scale-105"
             }`}
+             onClick={result}
           >
             {loading ? "Processing..." : "Update Inventory"}
           </button>
@@ -122,5 +156,6 @@ function UploadReceipt() {
     </div>
   );
 }
+
 
 export default UploadReceipt;

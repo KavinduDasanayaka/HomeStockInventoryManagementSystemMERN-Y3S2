@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const PreviewInventorySchema = new mongoose.Schema({
-    name: {
+    item: {
         type: String,
         required: true,
         trim: true
@@ -12,7 +12,7 @@ const PreviewInventorySchema = new mongoose.Schema({
         min: 0
     },
     unitPrice: {
-        type: Number,
+        type: String,
         required: true,
         min: 0
     },

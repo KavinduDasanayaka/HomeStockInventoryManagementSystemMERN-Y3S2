@@ -1,14 +1,15 @@
 import express from 'express';
 import multer from "multer";
 import {
-    createPreviewInventoryListing,handleUpload
+    createPreviewInventoryListing,handleUpload ,getAllPreviewInvetoryItems
 } from '../controllers/previewinventory.controller.js';
-import { verifyToken , authenticate } from '../utils/verifyUser.js';
+import { verifyToken , authenticate , authenticate2} from '../utils/verifyUser.js';
 
 const router = express.Router();
 
 
-router.post('/create', verifyToken,authenticate, createPreviewInventoryListing);
+router.post('/create',authenticate2, createPreviewInventoryListing);
+router.get('/get-previewInventory/:id', getAllPreviewInvetoryItems);
 
 const upload = multer({ dest: "uploads/" });
 router.post("/upload", upload.single("image"), handleUpload);
