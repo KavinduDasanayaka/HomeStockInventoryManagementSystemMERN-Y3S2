@@ -39,3 +39,26 @@ export const authenticate = (async (req, res, next) => {
     throw new Error("Not authorized, no token");
   }
 });
+
+export const authenticate2 = (async (req, res, next) => {
+  let token;
+  // Read JWT from the 'jwt' cookie
+  token = req.cookies.access_token;
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const User = await UserModel.findById(decoded.id).select("-password");
+      req.body.user = User;
+
+      
+      next();
+    } catch (error) {
+      res.status(401);
+      throw new Error("Not authorized, token failed.");
+    }
+  } else {
+    res.status(401);
+    throw new Error("Not authorized, no token");
+  }
+});
